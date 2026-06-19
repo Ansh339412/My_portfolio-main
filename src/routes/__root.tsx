@@ -15,7 +15,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 const BackToTop = lazy(() => import("@/components/back-to-top"));
 const CookieConsent = lazy(() => import("@/components/cookie-consent"));
-import PageTransition from "@/components/page-transition";
+import { ScrollProgress, CursorGlow, AuroraBackground } from "@/components/premium-effects";
+
 
 function NotFoundComponent() {
   return (
@@ -145,9 +146,10 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <PageTransition>
-          <Outlet />
-        </PageTransition>
+        <AuroraBackground />
+        <ScrollProgress />
+        <CursorGlow />
+        <Outlet />
         <Suspense fallback={null}>
           <BackToTop />
           <CookieConsent />

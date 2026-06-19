@@ -17,6 +17,7 @@ import {
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import AnimatedCounter from "@/components/animated-counter";
+import { FloatingParticles, Magnetic } from "@/components/premium-effects";
 import heroBg from "@/assets/hero-bg.jpg";
 import ctaBg from "@/assets/cta-bg.jpg";
 import { useState } from "react";
@@ -36,6 +37,9 @@ export const Route = createFileRoute("/")({
 });
 
 /* ---------------- HERO SECTION ---------------- */
+const EASE = [0.22, 1, 0.36, 1] as const;
+const NAME = "Anshpreet Singh";
+
 function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -44,76 +48,126 @@ function HeroSection() {
 
   return (
     <section ref={ref} className="relative flex min-h-screen items-center overflow-hidden">
+      {/* Background image dimmed under pure-black aurora */}
       <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
         <img
           src={heroBg}
           alt=""
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover opacity-25"
           fetchPriority="high"
           width={1920}
           height={1080}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background" />
+        {/* Animated mesh gradient */}
+        <div
+          className="absolute inset-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(60% 50% at 20% 30%, rgba(234,198,3,0.18), transparent 60%), radial-gradient(50% 50% at 80% 70%, rgba(255,225,74,0.10), transparent 60%)",
+          }}
+        />
       </motion.div>
+
+      <FloatingParticles count={22} />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 pt-32 pb-20 lg:px-8">
         <div className="max-w-3xl">
+          {/* Letter-by-letter name reveal */}
+          <h2 className="flex flex-wrap text-sm font-semibold uppercase tracking-[0.35em] text-gold" aria-label={NAME}>
+            {NAME.split("").map((ch, i) => (
+              <motion.span
+                key={i}
+                aria-hidden
+                initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.5, delay: 0.05 * i, ease: EASE }}
+                className="inline-block"
+              >
+                {ch === " " ? "\u00A0" : ch}
+              </motion.span>
+            ))}
+          </h2>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-sm font-semibold uppercase tracking-[0.25em] text-gold"
+            transition={{ duration: 0.6, delay: 0.9, ease: EASE }}
+            className="mt-6 text-xs font-medium uppercase tracking-[0.4em] text-muted-foreground"
           >
             Full Stack Developer
           </motion.p>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 text-5xl leading-[1.1] font-heading text-foreground md:text-7xl lg:text-8xl"
+            transition={{ duration: 0.9, delay: 1.0, ease: EASE }}
+            className="mt-4 text-5xl leading-[1.05] font-heading text-foreground md:text-7xl lg:text-8xl"
           >
             Crafting Digital{" "}
-            <span className="text-gold">Excellence</span>
+            <span className="text-gradient-gold">Excellence</span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35 }}
+            transition={{ duration: 0.7, delay: 1.2, ease: EASE }}
             className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground"
           >
             I build performant, scalable, and beautifully designed web applications that help businesses grow and users thrive.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 1.4, ease: EASE }}
             className="mt-10 flex flex-wrap gap-4"
           >
-            <Link
-              to="/portfolio"
-              className="group inline-flex items-center gap-2 rounded-md bg-foreground px-7 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-gold hover:text-charcoal"
-            >
-              View My Work
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-background/80 px-7 py-3.5 text-sm font-medium text-foreground backdrop-blur-sm transition-all hover:border-gold hover:text-gold"
-            >
-              Get in Touch
-            </Link>
-            <Link
-              to="/resume"
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-background/80 px-7 py-3.5 text-sm font-medium text-foreground backdrop-blur-sm transition-all hover:border-gold hover:text-gold"
-            >
-              View Resume / CV
-            </Link>
+            <Magnetic>
+              <Link
+                to="/portfolio"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-md bg-gold px-7 py-3.5 text-sm font-semibold text-charcoal transition-all hover:gold-glow"
+              >
+                <span className="relative z-10">View My Work</span>
+                <ArrowRight className="relative z-10 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 rounded-md border border-border bg-background/40 px-7 py-3.5 text-sm font-medium text-foreground backdrop-blur-sm transition-all hover:border-gold hover:text-gold"
+              >
+                Get in Touch
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link
+                to="/resume"
+                className="inline-flex items-center gap-2 rounded-md border border-border bg-background/40 px-7 py-3.5 text-sm font-medium text-foreground backdrop-blur-sm transition-all hover:border-gold hover:text-gold"
+              >
+                View Resume / CV
+              </Link>
+            </Magnetic>
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll hint */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.8, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.4em] text-muted-foreground"
+      >
+        <motion.span
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="inline-block"
+        >
+          Scroll
+        </motion.span>
+      </motion.div>
     </section>
   );
 }

@@ -39,7 +39,7 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-background/80 backdrop-blur-xl shadow-sm border-b border-border/50"
+            ? "bg-background/60 backdrop-blur-xl border-b border-gold/15 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
             : "bg-transparent"
         }`}
       >
@@ -52,16 +52,25 @@ export default function Navbar() {
 
           {/* Desktop nav */}
           <div className="hidden items-center gap-8 md:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                activeProps={{ className: "text-gold" }}
-                className="relative text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.to;
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className={`group relative text-sm font-medium transition-colors ${
+                    isActive ? "text-gold" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {link.label}
+                  <span
+                    className={`pointer-events-none absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-gold to-gold-light transition-all duration-300 ${
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </Link>
+              );
+            })}
 
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

@@ -9,16 +9,15 @@ interface ThemeProviderProps {
 const ThemeContext = React.createContext<{
   theme: "light" | "dark";
   setTheme: (theme: "light" | "dark") => void;
-}>({ theme: "light", setTheme: () => {} });
+}>({ theme: "dark", setTheme: () => {} });
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setThemeState] = React.useState<"light" | "dark">(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("theme");
       if (stored === "dark" || stored === "light") return stored;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
-    return "light";
+    return "dark";
   });
 
   const setTheme = React.useCallback((newTheme: "light" | "dark") => {
