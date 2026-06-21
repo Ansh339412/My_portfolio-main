@@ -19,7 +19,7 @@ I specialize in developing responsive and user-friendly web applications using m
 ---
 
 ## ✨ Features
-
+## as of 21-06-2026 Added more smooth transions to the about section of the portfolio website
 ### 🎨 Modern UI/UX
 - Clean and professional design
 - Dark theme with premium golden accents
