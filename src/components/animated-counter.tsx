@@ -11,6 +11,9 @@ interface AnimatedCounterProps {
   label: string;
 }
 
+
+
+
 export default function AnimatedCounter({ target, suffix = "", prefix = "", duration = 2, label }: AnimatedCounterProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
