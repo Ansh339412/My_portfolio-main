@@ -24,3 +24,6 @@ CREATE POLICY "Anyone can submit a contact query"
     AND length(trim(subject)) BETWEEN 1 AND 300
     AND length(trim(message)) BETWEEN 10 AND 5000
   );
+
+
+
