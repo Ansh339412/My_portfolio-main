@@ -1,3 +1,7 @@
+## Whats New
+I have optimised the use of the backend resources of supabase for my website and enhanced the backend resources for your convineance and user friendly design of the backend to make sure everything is clean and efficient\
+
+
 # 🚀 Anshpreet Singh Portfolio Website
 
 A modern, responsive, and interactive portfolio website showcasing my skills, projects, services, and professional journey as a B.Tech student and aspiring Full-Stack Developer.
